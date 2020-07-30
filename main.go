@@ -4,10 +4,14 @@ import (
 	"net/http"
 	"fmt"
 	"log"
+	"io/ioutil"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
+
+var buyerURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/buyers"
+var productURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/products"
 
 func main() {
 	r := chi.NewRouter()
@@ -26,7 +30,7 @@ func syncHandler(w http.ResponseWriter, r *http.Request) {
 	
 	date := r.FormValue("date")
 
-	buyersBody, err := GetBuyersBody(date)
+	buyersBody, err := GetPayload(date, buyerURL)
 
 	if err != nil {
 		
@@ -38,6 +42,6 @@ func syncHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Write([]byte("Succesful"))
 
-	fmt.Println(buyersBody) 
+	fmt.Println(buyersBody)
 
 }

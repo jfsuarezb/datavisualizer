@@ -7,11 +7,9 @@ import (
 
 )
 
-var buyerURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/buyers"
-
-func GetBuyersBody(date string) (string, error) {
+func GetPayload(date string, url string) (string, error) {
 	
-	request, err := http.NewRequest("GET", buyerURL, nil)
+	request, err := http.NewRequest("GET", url, nil)
 	request.Header.Set("date", date)
 
 	if err != nil {
@@ -20,19 +18,20 @@ func GetBuyersBody(date string) (string, error) {
 
 	client := http.Client{}
 	
-	buyerResp, err := client.Do(request)
+	resp, err := client.Do(request)
 
 	if err != nil {
 		return "", err
 	}
 	
-	defer buyerResp.Body.Close()
+	defer resp.Body.Close()
 
-	buyerBody, err := ioutil.ReadAll(buyerResp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 
 	if err != nil {
 		return "", err
 	}
 
-	return string(buyerBody), nil
+	return string(body), nil
+
 }
