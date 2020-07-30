@@ -11,6 +11,7 @@ import (
 
 var buyerURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/buyers"
 var productURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/products"
+var transactionURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/transactions"
 
 func main() {
 	r := chi.NewRouter()
@@ -29,18 +30,44 @@ func syncHandler(w http.ResponseWriter, r *http.Request) {
 	
 	date := r.FormValue("date")
 
-	buyersBody, err := GetPayload(date, buyerURL)
+	buyersPayload, err := GetPayload(date, buyerURL)
 
 	if err != nil {
 		
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("Internal Error"))
-		log.Fatalln(err)
+		handleErr(w, err)
 
 	}
 
+	buyersData := JSONHandler(buyersPayload)
+
+	fmt.Println("Data:", buyersData)
+
+
+
+	/*productsPayload, err := GetPayload(date, productURL)
+
+	if err != nil {
+
+		handleErr(w, err)
+
+	}
+
+	transactionsPayload, err := GetPayload(date, transactionURL)
+
+	if err != nil {
+
+		handleErr(w, err)
+
+	}*/
+
 	w.Write([]byte("Succesful"))
 
-	fmt.Println(buyersBody)
+}
+
+func handleErr(w http.ResponseWriter, err error) {
+		
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("InternalServerError"))
+		log.Fatalln(err)
 
 }
