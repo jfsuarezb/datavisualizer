@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"fmt"
 	"log"
-	"io/ioutil"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
