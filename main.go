@@ -1,8 +1,8 @@
 package main
 
 import (
+	
 	"net/http"
-	"fmt"
 	"log"
 
 	"github.com/go-chi/chi"
@@ -30,9 +30,9 @@ func main() {
 
 func syncHandler(w http.ResponseWriter, r *http.Request) {
 	
-	date := r.FormValue("date")
+	/*date := r.FormValue("date")
 
-	/*buyersPayload, err := GetPayload(date, buyerURL)
+	buyersPayload, err := GetPayload(date, buyerURL)
 
 	if err != nil {
 		
@@ -42,7 +42,7 @@ func syncHandler(w http.ResponseWriter, r *http.Request) {
 
 	buyersData := JSONHandler(buyersPayload)*/
 
-	productsPayload, err := GetPayload(date, productURL)
+	/*productsPayload, err := GetPayload(date, productURL)
 
 	if err != nil {
 
@@ -52,15 +52,15 @@ func syncHandler(w http.ResponseWriter, r *http.Request) {
 
 	productsData := CSVHandler(productsPayload)
 
-	fmt.Println(productsData)
-
-	/*transactionsPayload, err := GetPayload(date, transactionURL)
+	transactionsPayload, err := GetPayload(date, transactionURL)
 
 	if err != nil {
 
 		handleErr(w, err)
 
-	}*/
+	}
+
+	transactionsData := NoStandHandler(transactionsPayload)*/
 
 	w.Write([]byte("Succesful"))
 
