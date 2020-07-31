@@ -30,7 +30,7 @@ func main() {
 
 func syncHandler(w http.ResponseWriter, r *http.Request) {
 	
-	/*date := r.FormValue("date")
+	date := r.FormValue("date")
 
 	buyersPayload, err := GetPayload(date, buyerURL)
 
@@ -40,9 +40,9 @@ func syncHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	buyersData := JSONHandler(buyersPayload)*/
+	buyersData := JSONHandler(buyersPayload)
 
-	/*productsPayload, err := GetPayload(date, productURL)
+	productsPayload, err := GetPayload(date, productURL)
 
 	if err != nil {
 
@@ -60,7 +60,9 @@ func syncHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	transactionsData := NoStandHandler(transactionsPayload)*/
+	transactionsData := NoStandHandler(transactionsPayload)
+
+	Concatenate(&buyersData, productsData, &transactionsData)
 
 	w.Write([]byte("Succesful"))
 

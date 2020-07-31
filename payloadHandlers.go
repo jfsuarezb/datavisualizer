@@ -8,9 +8,9 @@ import (
 
 )
 
-func JSONHandler(payload []byte) ([]map[string]string) {
+func JSONHandler(payload []byte) ([]map[string]interface{}) {
 
-	var data []map[string]string
+	var data []map[string]interface{}
 
 	json.Unmarshal(payload, &data)
 
@@ -25,17 +25,17 @@ func JSONHandler(payload []byte) ([]map[string]string) {
 
 }
 
-func CSVHandler(payload []byte) ([]map[string]string) {
+func CSVHandler(payload []byte) ([]map[string]interface{}) {
 
 	s := strings.Split(string(payload), "\n")
 
 	var arr []string
 
-	var data []map[string]string
+	var data []map[string]interface{}
 
 	for _, ch := range s {
 
-		placeholder := make(map[string]string)
+		placeholder := make(map[string]interface{})
 
 		arr = strings.Split(ch, "'")
 
@@ -61,6 +61,7 @@ func NoStandHandler(payload []byte) ([]map[string]interface{}) {
 
 	var data []map[string]interface{}
 
+	bidr, _ := regexp.Compile("[0-9a-f]{6,8}")
 	r, _ := regexp.Compile("([\\d\\.])+")
 	dotr, _ := regexp.Compile("\\.")
 	devr, _ := regexp.Compile("ios|android|mac|linux|windows")
@@ -72,8 +73,13 @@ func NoStandHandler(payload []byte) ([]map[string]interface{}) {
 
 		placeholder := make(map[string]interface{})
 
-		placeholder["tid"] = string([]rune(ch)[0:11])
-		placeholder["bid"] = string([]rune(ch)[12:19])
+		placeholder["tid"] = string([]rune(ch)[0:12])
+
+		if bidr.MatchString(ch) {
+
+			placeholder["bid"] = bidr.FindAllString(ch, -1)[1]
+
+		}
 
 		match := r.FindAllString(ch, -1)
 
@@ -82,6 +88,7 @@ func NoStandHandler(payload []byte) ([]map[string]interface{}) {
 			if dotr.MatchString(posip) {
 
 				placeholder["ip"] = posip
+
 				break
 
 			}
