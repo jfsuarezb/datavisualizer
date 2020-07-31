@@ -14,6 +14,7 @@ var productURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/product
 var transactionURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/transactions"
 
 func main() {
+	
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
@@ -24,13 +25,14 @@ func main() {
 	r.Get("/sync", syncHandler)
 
 	http.ListenAndServe(":3000", r)
+
 }
 
 func syncHandler(w http.ResponseWriter, r *http.Request) {
 	
 	date := r.FormValue("date")
 
-	buyersPayload, err := GetPayload(date, buyerURL)
+	/*buyersPayload, err := GetPayload(date, buyerURL)
 
 	if err != nil {
 		
@@ -38,13 +40,9 @@ func syncHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	buyersData := JSONHandler(buyersPayload)
+	buyersData := JSONHandler(buyersPayload)*/
 
-	fmt.Println("Data:", buyersData)
-
-
-
-	/*productsPayload, err := GetPayload(date, productURL)
+	productsPayload, err := GetPayload(date, productURL)
 
 	if err != nil {
 
@@ -52,7 +50,11 @@ func syncHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	transactionsPayload, err := GetPayload(date, transactionURL)
+	productsData := CSVHandler(productsPayload)
+
+	fmt.Println(productsData)
+
+	/*transactionsPayload, err := GetPayload(date, transactionURL)
 
 	if err != nil {
 

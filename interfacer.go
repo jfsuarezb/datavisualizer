@@ -7,13 +7,13 @@ import (
 
 )
 
-func GetPayload(date string, url string) (string, error) {
+func GetPayload(date string, url string) ([]byte, error) {
 	
 	request, err := http.NewRequest("GET", url, nil)
 	request.Header.Set("date", date)
 
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	client := http.Client{}
@@ -21,7 +21,7 @@ func GetPayload(date string, url string) (string, error) {
 	resp, err := client.Do(request)
 
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	
 	defer resp.Body.Close()
@@ -29,9 +29,9 @@ func GetPayload(date string, url string) (string, error) {
 	body, err := ioutil.ReadAll(resp.Body)
 
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return string(body), nil
+	return body, nil
 
 }
