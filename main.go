@@ -3,14 +3,15 @@ package main
 import (
 	
 	"net/http"
-	"log"
-	"fmt"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	
+	godotenv.Load()
 	
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -19,16 +20,6 @@ func main() {
 	r.Get("/buyers", GetBuyers)
 	r.Get("/buyer", GetBuyer)
 
-	err := http.ListenAndServe(":3000", r)
-
-	if err != nil {
-
-		log.Fatalln(err)
-
-	} else {
-
-		fmt.Println("App is running")
-
-	}
+	http.ListenAndServe(":3000", r)
 
 }

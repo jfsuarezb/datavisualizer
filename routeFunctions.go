@@ -4,15 +4,16 @@ import (
 
 	"net/http"
 	"log"
+	"os"
 
 )
 
-var buyerURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/buyers"
-var productURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/products"
-var transactionURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/transactions"
-
 func SyncHandler(w http.ResponseWriter, r *http.Request) {
 	
+	buyerURL := os.Getenv("BUYERSLINK")
+	productURL := os.Getenv("PRODUCTSLINK")
+	transactionURL := os.Getenv("TRANSLINK")
+
 	date := r.FormValue("date")
 
 	buyersPayload, err := GetPayload(date, buyerURL)

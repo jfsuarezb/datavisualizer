@@ -16,6 +16,7 @@ require (
 	github.com/golang/mock v1.4.4 // indirect
 	github.com/iancoleman/strcase v0.0.0-20191112232945-16388991a334 // indirect
 	github.com/ianlancetaylor/demangle v0.0.0-20200715173712-053cf528c12f // indirect
+	github.com/joho/godotenv v1.3.0
 	github.com/kisielk/errcheck v1.4.0 // indirect
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
