@@ -2,7 +2,6 @@ package main
 
 import (
 
-	"fmt"
 	"context"
 
 	"github.com/dgraph-io/dgo/v2"
@@ -19,7 +18,6 @@ func DGQuery(query string) (string, error) {
 	
 	if err != nil {
 		
-		fmt.Println("e1")
 		return "", err
 
 	}
@@ -41,7 +39,6 @@ func DGQuery(query string) (string, error) {
 
 	if err != nil {
 
-		fmt.Println("e2")
 		return "", err
 
 	}
@@ -54,7 +51,6 @@ func DGQuery(query string) (string, error) {
 
 	if err != nil {
 
-		fmt.Println("e3")
 		return "", err
 
 	}
@@ -63,7 +59,6 @@ func DGQuery(query string) (string, error) {
 
 	if err != nil {
 
-		fmt.Println("e4")
 		return "", err
 
 	}
