@@ -33,45 +33,45 @@ func syncHandler(w http.ResponseWriter, r *http.Request) {
 	date := r.FormValue("date")
 
 	buyersPayload, err := GetPayload(date, buyerURL)
-
-	if err != nil {
 		
-		handleErr(w, err)
-
-	}
+	handleErr(w, err)
 
 	buyersData := JSONHandler(buyersPayload)
 
 	productsPayload, err := GetPayload(date, productURL)
 
-	if err != nil {
-
-		handleErr(w, err)
-
-	}
+	handleErr(w, err)
 
 	productsData := CSVHandler(productsPayload)
 
 	transactionsPayload, err := GetPayload(date, transactionURL)
 
-	if err != nil {
+	handleErr(w, err)
 
-		handleErr(w, err)
+	transactionsData, err := NoStandHandler(transactionsPayload)
 
-	}
+	handleErr(w, err)
 
-	transactionsData := NoStandHandler(transactionsPayload)
+	query := Concatenate(&buyersData, productsData, &transactionsData)
 
-	Concatenate(&buyersData, productsData, &transactionsData)
+	query = "{\"set\":" + query + "}"
 
-	w.Write([]byte("Succesful"))
+	resp, err := DGQuery(query)
+
+	handleErr(w, err)
+
+	w.Write([]byte(resp))
 
 }
 
 func handleErr(w http.ResponseWriter, err error) {
-		
+
+	if err != nil {
+
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("InternalServerError"))
 		log.Fatalln(err)
+
+	}
 
 }

@@ -1,7 +1,12 @@
 package main 
 
+import (
 
-func Concatenate(buyersData *[]map[string]interface{}, productsData []map[string]interface{}, transactionsData *[]map[string]interface{}) {
+	"encoding/json"
+
+)
+
+func Concatenate(buyersData *[]map[string]interface{}, productsData []map[string]interface{}, transactionsData *[]map[string]interface{}) string {
 
 	for i, trans := range *transactionsData {
 
@@ -48,5 +53,9 @@ func Concatenate(buyersData *[]map[string]interface{}, productsData []map[string
 		(*buyersData)[i]["trans"] = transArray
 
 	}
+
+	data, _ := json.Marshal(*buyersData)
+
+	return string(data)
 
 }

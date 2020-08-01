@@ -55,18 +55,59 @@ func CSVHandler(payload []byte) ([]map[string]interface{}) {
 
 }
 
-func NoStandHandler(payload []byte) ([]map[string]interface{}) {
+func NoStandHandler(payload []byte) ([]map[string]interface{}, error) {
 
 	s := strings.Split(string(payload), "#")
 
 	var data []map[string]interface{}
 
-	bidr, _ := regexp.Compile("[0-9a-f]{6,8}")
-	r, _ := regexp.Compile("([\\d\\.])+")
-	dotr, _ := regexp.Compile("\\.")
-	devr, _ := regexp.Compile("ios|android|mac|linux|windows")
-	parr, _ := regexp.Compile("\\(([^)]+)\\)")
-	pidr, _ := regexp.Compile("(\\w+)")
+	bidr, err := regexp.Compile("[0-9a-f]{6,8}")
+
+	if err != nil {
+
+		return nil, err
+
+	}
+
+	r, err := regexp.Compile("([\\d\\.])+")
+
+	if err != nil {
+
+		return nil, err
+
+	}
+
+	dotr, err := regexp.Compile("\\.")
+
+	if err != nil {
+
+		return nil, err
+
+	}
+
+	devr, err := regexp.Compile("ios|android|mac|linux|windows")
+
+	if err != nil {
+
+		return nil, err
+
+	}
+
+	parr, err := regexp.Compile("\\(([^)]+)\\)")
+
+	if err != nil {
+
+		return nil, err
+
+	}
+
+	pidr, err := regexp.Compile("(\\w+)")
+
+	if err != nil {
+
+		return nil, err
+
+	}
 
 
 	for _, ch := range s {
@@ -104,6 +145,6 @@ func NoStandHandler(payload []byte) ([]map[string]interface{}) {
 
 	}
 
-	return data
+	return data, nil
 
 }
