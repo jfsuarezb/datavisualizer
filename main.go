@@ -10,10 +10,6 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
-var buyerURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/buyers"
-var productURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/products"
-var transactionURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/transactions"
-
 func main() {
 	
 	r := chi.NewRouter()
@@ -21,6 +17,7 @@ func main() {
 	
 	r.Get("/sync", SyncHandler)
 	r.Get("/buyers", GetBuyers)
+	r.Get("/buyer", GetBuyer)
 
 	err := http.ListenAndServe(":3000", r)
 

@@ -7,6 +7,10 @@ import (
 
 )
 
+var buyerURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/buyers"
+var productURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/products"
+var transactionURL = "https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/transactions"
+
 func SyncHandler(w http.ResponseWriter, r *http.Request) {
 	
 	date := r.FormValue("date")
@@ -46,6 +50,20 @@ func SyncHandler(w http.ResponseWriter, r *http.Request) {
 func GetBuyers(w http.ResponseWriter, r *http.Request) {
 
 	resp, err := DGQueryBuyers()
+
+	handleErr(w, err)
+
+	w.Header().Set("Content-Type", "application/json")
+
+	w.Write(resp)
+
+}
+
+func GetBuyer(w http.ResponseWriter, r *http.Request) {
+
+	uid := r.FormValue("uid")
+
+	resp, err := DGQueryBuyer(uid)
 
 	handleErr(w, err)
 
