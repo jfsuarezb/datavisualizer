@@ -10,7 +10,7 @@ import (
 
 )
 
-func DGQuery(query string) (string, error) {
+func DGPopulate(query string) (string, error) {
 
 	d, err := grpc.Dial("localhost:9080", grpc.WithInsecure())
 	
@@ -65,5 +65,73 @@ func DGQuery(query string) (string, error) {
 
 	return "succesful", nil
 
-} 
+}
 
+func DGQueryBuyers() ([]byte, error) {
+
+	d, err := grpc.Dial("localhost:9080", grpc.WithInsecure())
+	
+	defer d.Close()
+	
+	if err != nil {
+		
+		return nil, err
+
+	}
+
+	dgClient := dgo.NewDgraphClient(api.NewDgraphClient(d),)
+
+	err = dgClient.Alter(context.Background(), &api.Operation{
+
+		Schema: `
+
+			age: int .
+			name: string .
+			bid: string .
+			trans: [uid] .
+		
+		`,
+
+	})
+
+	if err != nil {
+
+		return nil, err
+
+	}
+
+	txn := dgClient.NewTxn()
+
+	defer txn.Discard(context.Background())
+
+	const q = `
+
+		{	
+			getBuyers(func: has(age)) {
+				name
+				age
+				uid
+			}
+		}
+
+	`
+
+	resp, err := txn.Query(context.Background(), q)
+
+	if err != nil {
+
+		return nil, err
+
+	}
+
+	err = txn.Commit(context.Background())
+
+	if err != nil {
+
+		return nil, err
+
+	}
+
+	return resp.GetJson(), nil
+
+}
