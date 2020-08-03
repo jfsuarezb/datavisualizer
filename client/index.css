@@ -49,3 +49,20 @@ input {
     margin-bottom:0.5vw;
 
 }
+
+#userlist {
+    margin-top:2vw;
+}
+
+#viewButton {
+
+    color:rgb(55, 173, 112);
+    font-weight:bold;
+
+}
+
+.listClass {
+
+    width:75%;
+
+}
