@@ -5,8 +5,36 @@ import (
 	"net/http"
 	"log"
 	"os"
+	"io/ioutil"
 
 )
+
+func ServeHtml(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "text/html")
+	resp, err := ioutil.ReadFile("./client/index.html")
+	handleErr(w, err)
+	w.Write(resp)
+
+}
+
+func ServeCss(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "text/css")
+	resp, err := ioutil.ReadFile("./client/index.css")
+	handleErr(w, err)
+	w.Write(resp)
+
+}
+
+func ServeJs(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "text/javascript")
+	resp, err := ioutil.ReadFile("./client/index.js")
+	handleErr(w, err)
+	w.Write(resp)
+
+}
 
 func SyncHandler(w http.ResponseWriter, r *http.Request) {
 	

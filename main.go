@@ -15,6 +15,10 @@ func main() {
 	
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+
+	r.Get("/", ServeHtml)
+	r.Get("/index.css", ServeCss)
+	r.Get("/index.js", ServeJs)
 	
 	r.Get("/sync", SyncHandler)
 	r.Get("/buyers", GetBuyers)
