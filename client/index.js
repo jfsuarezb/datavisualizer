@@ -1,3 +1,21 @@
+Vue.component('user-panel-display', {
+
+    data:function() {
+
+        return {
+            uid: app.$route.params.uid
+        }
+
+    },
+
+    template: `
+    
+        <h1>{{ this.uid }}</h1>
+
+    `
+
+})
+
 Vue.component('date-picker', {
 
     data: function() {
@@ -45,8 +63,8 @@ Vue.component('date-picker', {
             let unixt = Date.parse(this.date)/1000
             try {
                 this.buttonState = true
-                await fetch(window.location.href + `sync?date=${unixt}`)
-                let resp = await fetch(window.location.href + "buyers")
+                await fetch(window.location.href.replace("#/","") + `sync?date=${unixt}`)
+                let resp = await fetch(window.location.href.replace("#/","") + "buyers")
                 let data = await resp.json()
                 this.buttonState = false
                 return data
@@ -58,7 +76,7 @@ Vue.component('date-picker', {
 
         userClickHandler: function(uid) {
 
-            console.log(uid)
+            this.$router.push(`user/${uid}`)
 
         }
 
@@ -66,9 +84,22 @@ Vue.component('date-picker', {
 
 })
 
-var app = new Vue({
+const routes = [
+    {path:"/", component:'date-picker'},
+    {path:"/user/:uid", component:'user-panel-display'}
+]
 
-    el: "#app",
-    vuetify: new Vuetify(),
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+
+    routes
 
 })
+
+var app = new Vue({
+
+    router,
+    vuetify: new Vuetify(),
+
+}).$mount("#app")
