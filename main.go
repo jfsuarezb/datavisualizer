@@ -24,6 +24,6 @@ func main() {
 	r.Get("/buyers", GetBuyers)
 	r.Get("/buyer", GetBuyer)
 
-	http.ListenAndServe(":3000", r)
+	http.ListenAndServe(":8000", r)
 
 }
