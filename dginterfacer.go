@@ -198,7 +198,9 @@ func DGQueryBuyer(uid string) ([]byte, error) {
 				age
 				trans {
 					ip
+					tid
 					prods {
+						pid
 						name
 						price
 					}
