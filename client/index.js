@@ -3,8 +3,8 @@ Vue.component('user-panel-display', {
     data: function() {
 
         return {
-            userName:"Julian",
-            userAge:15,
+            userName:"",
+            userAge:0,
             userTransHistory:[],
             otherUsers:[],
             recommendedProducts:[],
@@ -32,13 +32,13 @@ Vue.component('user-panel-display', {
                                 <v-toolbar-title>Tus Transacciones</v-toolbar-title>
                             </v-toolbar>
                             <v-list>
-                                <v-list-group v-for="trans in userTransHistory" :key="trans.ip">
+                                <v-list-group v-for="(trans, index) in userTransHistory" :key="trans.tid">
                                     <template v-slot:activator>
                                         <v-list-item-content>
-                                            <v-list-item-title v-text="'Transacción: ' + trans.ip"></v-list-item-title>
+                                            <v-list-item-title v-text="'Transaccion: ' + (index + 1)"></v-list-item-title>
                                         </v-list-item-content>
                                     </template>
-                                    <v-list-item v-for="prod in trans.prods" :key="prod.price">
+                                    <v-list-item v-for="prod in trans.prods" :key="prod.pid">
                                         <v-list-item-content>
                                             <v-list-item-title v-text="'Producto: ' + prod.name"></v-list-item-title>
                                             <v-list-item-subtitle v-text="'Precio: ' + prod.price"></v-list-item-subtitle>
@@ -54,7 +54,7 @@ Vue.component('user-panel-display', {
                                 <v-toolbar-title>Produtos Recomendados</v-toolbar-title>
                             </v-toolbar>
                             <v-list>
-                                <v-list-item v-for="prod in recommendedProducts" :key="prod.price">
+                                <v-list-item v-for="prod in recommendedProducts" :key="prod.pid">
                                     <v-list-item-content>
                                             <v-list-item-title v-text="'Producto: ' + prod.name"></v-list-item-title>
                                             <v-list-item-subtitle v-text="'Precio: ' + prod.price"></v-list-item-subtitle>
@@ -64,10 +64,10 @@ Vue.component('user-panel-display', {
                         </v-card>
                         <v-card>
                             <v-toolbar style="background-color:rgb(55, 173, 112);color:white;">
-                                <v-toolbar-title>Otros como tú</v-toolbar-title>
+                                <v-toolbar-title>Otros como t&uacute;</v-toolbar-title>
                             </v-toolbar>
                             <v-list>
-                                <v-list-item v-for="user in otherUsers" :key="user.age">
+                                <v-list-item v-for="user in otherUsers.slice(0,20)" :key="user.bid">
                                     <v-list-item-content>
                                             <v-list-item-title v-text="'Nombre: ' + user.name"></v-list-item-title>
                                             <v-list-item-subtitle v-text="'Edad: ' + user.age"></v-list-item-subtitle>
@@ -157,12 +157,12 @@ Vue.component('date-picker', {
             <input type="date" v-model="date"></input>
             <v-btn v-bind:disabled="buttonState" small id="datepickerbutton" v-on:click="clickHandler">Buscar</v-btn>
             <v-list two-line subheader id="userlist">
-                <v-list-item class="listClass" v-for="user in usersData" v-bind:key="user.uid">
-                    <v-list-item-content>
+                <v-list-item v-for="user in usersData.slice(0, 50)" v-bind:key="user.uid">
+                    <v-list-item-content style="text-align:left;">
                         <v-list-item-title v-text="'Nombre: ' + user.name"></v-list-item-title>
                         <v-list-item-subtitle v-text="'Edad: ' + user.age"></v-list-item-subtitle>
                     </v-list-item-content>
-                    <v-list-item-action>
+                    <v-list-item-action style="text-align:right;">
                         <v-btn v-on:click="userClickHandler(user.uid)" text small id="viewButton">Ver</v-btn>
                     </v-list-item-action>
                 </v-list-item>

@@ -298,6 +298,7 @@ func DGQueryBuyer(uid string) ([]byte, error) {
 				buyersameip(func: uid(%s)) {
 					name
 					age
+					bid
 				}
 			}
 
@@ -334,6 +335,7 @@ func DGQueryBuyer(uid string) ([]byte, error) {
 
 							name
 							price
+							pid
 
 						}
 

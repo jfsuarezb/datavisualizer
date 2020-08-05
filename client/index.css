@@ -20,6 +20,8 @@
     font-size:0.75vw;
     text-align:center;
     padding:1vw;
+    margin-top:1vw;
+    margin-bottom:1vw;
 
 }
 
@@ -51,7 +53,11 @@ input {
 }
 
 #userlist {
+    
+    margin:auto;
     margin-top:2vw;
+    width:40%;
+
 }
 
 #viewButton {
@@ -66,12 +72,6 @@ input {
     color:rgb(55, 173, 112);
     font-weight:bold;
     margin-bottom:1vw;
-
-}
-
-.listClass {
-
-    width:85%;
 
 }
 
